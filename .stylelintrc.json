@@ -1,0 +1,13 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-prettier/recommended"],
+  "rules": {
+    "font-family-no-missing-generic-family-keyword": null,
+    "number-max-precision": 10,
+    "indentation": 2,
+    "block-no-empty": true,
+    "color-no-invalid-hex": true,
+    "declaration-block-no-duplicate-properties": true,
+    "declaration-block-no-shorthand-property-overrides": true,
+    "selector-pseudo-class-no-unknown": true
+  }
+}

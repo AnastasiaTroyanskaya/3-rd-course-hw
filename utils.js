@@ -1,8 +1,6 @@
 // import _ from 'lodash';
-import { shuffle } from 'lodash';
-import { concat } from 'lodash';
-
-
+import { shuffle } from "lodash";
+import { concat } from "lodash";
 
 export const getCardsArray = (difficult) => {
   const cards = [
