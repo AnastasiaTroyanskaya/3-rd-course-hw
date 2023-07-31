@@ -1,0 +1,7 @@
+rules:
+  indentation: 2
+  block-no-empty: true
+  color-no-invalid-hex: true
+  declaration-block-no-duplicate-properties: true
+  declaration-block-no-shorthand-property-overrides: true
+  selector-pseudo-class-no-unknown: true
