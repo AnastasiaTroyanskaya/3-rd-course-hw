@@ -10,12 +10,17 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   renderApp: () => (/* binding */ renderApp)
+/* harmony export */   renderApp: () => (/* binding */ renderApp),
+/* harmony export */   renderCongratulation: () => (/* binding */ renderCongratulation)
 /* harmony export */ });
 /* harmony import */ var _components_utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/utils.js */ "./components/utils.js");
+/* harmony import */ var _index_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../index.js */ "./index.js");
+
+
+
 let appEl = document.getElementById("app");
 
-const renderApp = () => {
+const renderApp = (appEl) => {
   const appHtml = `
     <form action="#" class="difficulty-block">
     <h3 class="difficulty-title">Выбери сложность</h3>
@@ -49,14 +54,13 @@ const renderApp = () => {
 function getCardHTML(card) {
   return `<li class="shirt">
       <div class="card">
-          <img src="${card}" alt = "карта">
+          <img src="${card.value}" alt = "карта">
       </div>
       `;
 }
 function renderGameComponent(level) {
   const cards = (0,_components_utils_js__WEBPACK_IMPORTED_MODULE_0__.getCardsArray)(level);
   const cardsHtml = cards.map((card) => getCardHTML(card)).join("");
-  console.log(cardsHtml);
   const appHtml = `
       <div class="game-header">
       <div class="timer">
@@ -72,11 +76,41 @@ function renderGameComponent(level) {
       <ul>${cardsHtml}</ul>
       </div>`;
   appEl.innerHTML = appHtml;
+  const timer = appEl.querySelector(".time");
+  if (timer) (0,_components_utils_js__WEBPACK_IMPORTED_MODULE_0__.initTimer)(timer);
 
-  let playingCards = appEl.querySelectorAll(".card");
-  for (const playingCard of playingCards) {
-    setTimeout(() => playingCard.classList.add("hide"), 5000);
+  const restart = appEl.querySelector(".restart");
+  if (restart) {
+    restart.onclick = () => {
+      renderApp(appEl);
+    };
+    (0,_index_js__WEBPACK_IMPORTED_MODULE_1__.gameLogic)(cards);
   }
+  // let playingCards = appEl.querySelectorAll(".card");
+  // for (const playingCard of playingCards) {
+  //   setTimeout(() => playingCard.classList.add("hide"), 5000);
+  // }
+}
+function renderCongratulation(appEl, time, win) {
+  const winHtml = `<div class="finish-game">
+    <div class="image">
+    <img src=${
+      win ? "./assets/images/celebration.png" : "./assets/images/dead.png"
+    } alt = "картинка">
+    </div>
+    <h3 class="win-title">Вы ${win ? "выиграли" : "проиграли"}!</h3>
+    <!-- <div class="time"> -->
+    <p class="time-text">Затраченное время:</p>
+    <p class="time-value">${time}</p>
+    <!-- </div> -->
+    <button class="start-button">Играть снова</button>
+  </div>`;
+  appEl.innerHTML = winHtml;
+  const restart = appEl.querySelector(".start-button");
+  if (restart)
+    restart.onclick = () => {
+      renderApp(appEl);
+    };
 }
 
 
@@ -91,7 +125,8 @@ function renderGameComponent(level) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   getCardsArray: () => (/* binding */ getCardsArray)
+/* harmony export */   getCardsArray: () => (/* binding */ getCardsArray),
+/* harmony export */   initTimer: () => (/* binding */ initTimer)
 /* harmony export */ });
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_0__);
@@ -100,48 +135,160 @@ __webpack_require__.r(__webpack_exports__);
 
 const getCardsArray = (difficult) => {
   const cards = [
-    "./assets/images/cards/6 бубны.png",
-    "./assets/images/cards/6 крести.png",
-    "./assets/images/cards/6 пики.png",
-    "./assets/images/cards/6 черви.png",
-    "./assets/images/cards/7 бубны.png",
-    "./assets/images/cards/7 крести.png",
-    "./assets/images/cards/7 пики.png",
-    "./assets/images/cards/7 черви.png",
-    "./assets/images/cards/8 бубны.png",
-    "./assets/images/cards/8 крести.png",
-    "./assets/images/cards/8 пики.png",
-    "./assets/images/cards/8 черви.png",
-    "./assets/images/cards/9 бубны.png",
-    "./assets/images/cards/9 крести.png",
-    "./assets/images/cards/9 пики.png",
-    "./assets/images/cards/9 черви.png",
-    "./assets/images/cards/10 бубны.png",
-    "./assets/images/cards/10 крести.png",
-    "./assets/images/cards/10 пики.png",
-    "./assets/images/cards/10 черви.png",
-    "./assets/images/cards/валет бубны.png",
-    "./assets/images/cards/валет крести.png",
-    "./assets/images/cards/валет пики.png",
-    "./assets/images/cards/валет черви.png",
-    "./assets/images/cards/дама бубны.png",
-    "./assets/images/cards/дама крести.png",
-    "./assets/images/cards/дама пики.png",
-    "./assets/images/cards/дама черви.png",
-    "./assets/images/cards/король бубны.png",
-    "./assets/images/cards/король крести.png",
-    "./assets/images/cards/король пики.png",
-    "./assets/images/cards/король черви.png",
-    "./assets/images/cards/туз бубны.png",
-    "./assets/images/cards/туз крести.png",
-    "./assets/images/cards/туз пики.png",
-    "./assets/images/cards/туз черви.png",
+    { id: 61, value: "./assets/images/cards/6 бубны.png" },
+    { id: 62, value: "./assets/images/cards/6 крести.png" },
+    { id: 63, value: "./assets/images/cards/6 пики.png" },
+    { id: 64, value: "./assets/images/cards/6 черви.png" },
+    { id: 71, value: "./assets/images/cards/7 бубны.png" },
+    { id: 72, value: "./assets/images/cards/7 крести.png" },
+    { id: 73, value: "./assets/images/cards/7 пики.png" },
+    { id: 74, value: "./assets/images/cards/7 черви.png" },
+    { id: 81, value: "./assets/images/cards/8 бубны.png" },
+    { id: 82, value: "./assets/images/cards/8 крести.png" },
+    { id: 83, value: "./assets/images/cards/8 пики.png" },
+    { id: 84, value: "./assets/images/cards/8 черви.png" },
+    { id: 91, value: "./assets/images/cards/9 бубны.png" },
+    { id: 92, value: "./assets/images/cards/9 крести.png" },
+    { id: 93, value: "./assets/images/cards/9 пики.png" },
+    { id: 94, value: "./assets/images/cards/9 черви.png" },
+    { id: 101, value: "./assets/images/cards/10 бубны.png" },
+    { id: 102, value: "./assets/images/cards/10 крести.png" },
+    { id: 103, value: "./assets/images/cards/10 пики.png" },
+    { id: 104, value: "./assets/images/cards/10 черви.png" },
+    { id: 11, value: "./assets/images/cards/валет бубны.png" },
+    { id: 12, value: "./assets/images/cards/валет крести.png" },
+    { id: 13, value: "./assets/images/cards/валет пики.png" },
+    { id: 14, value: "./assets/images/cards/валет черви.png" },
+    { id: 21, value: "./assets/images/cards/дама бубны.png" },
+    { id: 22, value: "./assets/images/cards/дама крести.png" },
+    { id: 23, value: "./assets/images/cards/дама пики.png" },
+    { id: 24, value: "./assets/images/cards/дама черви.png" },
+    { id: 31, value: "./assets/images/cards/король бубны.png" },
+    { id: 32, value: "./assets/images/cards/король крести.png" },
+    { id: 33, value: "./assets/images/cards/король пики.png" },
+    { id: 34, value: "./assets/images/cards/король черви.png" },
+    { id: 41, value: "./assets/images/cards/туз бубны.png" },
+    { id: 42, value: "./assets/images/cards/туз крести.png" },
+    { id: 43, value: "./assets/images/cards/туз пики.png" },
+    { id: 44, value: "./assets/images/cards/туз черви.png" },
   ];
   const shuffledCards = (0,lodash__WEBPACK_IMPORTED_MODULE_0__.shuffle)(cards);
   const slicedArray = shuffledCards.slice(0, difficult / 2);
   const duplicatedArray = (0,lodash__WEBPACK_IMPORTED_MODULE_0__.concat)(slicedArray, slicedArray);
   return (0,lodash__WEBPACK_IMPORTED_MODULE_0__.shuffle)(duplicatedArray);
 };
+
+function initTimer(element) {
+  // let hours = 0;
+  let minutes = 0;
+  let seconds = 0;
+  setInterval(() => {
+    seconds++;
+    if (seconds === 60) {
+      minutes++;
+      seconds = 0;
+    }
+    if (minutes === 60) {
+      // hours++;
+      minutes = 0;
+    }
+    element.innerText = `${minutes < 10 ? "0" + minutes : minutes}.${
+      seconds < 10 ? "0" + seconds : seconds
+    }`;
+  }, 1000);
+}
+
+
+/***/ }),
+
+/***/ "./index.js":
+/*!******************!*\
+  !*** ./index.js ***!
+  \******************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   gameLogic: () => (/* binding */ gameLogic)
+/* harmony export */ });
+/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles.css */ "./styles.css");
+/* harmony import */ var _components_render_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/render.js */ "./components/render.js");
+
+
+
+// import { getCardsArray } from "./components/utils.js";
+
+let appEl = document.getElementById("app");
+let firstCard = null;
+let secondCard = null;
+let clickable = true;
+
+if (appEl) (0,_components_render_js__WEBPACK_IMPORTED_MODULE_1__.renderApp)(appEl);
+
+function gameLogic(cards) {
+  if (appEl) {
+    let cardsShirts = appEl.querySelectorAll(".shirt");
+    cardsShirts.forEach((cardsShirt) => {
+      setTimeout(
+        () => cardsShirt.firstElementChild?.classList.add("hide"),
+        5000,
+      );
+      setTimeout(() => cardsShirt.classList.add("flipped"), 5000);
+    });
+
+    setTimeout(() => {
+      cardsShirts.forEach((cardsShirt, index) => {
+        cardsShirt.addEventListener("click", () => {
+          if (clickable === true && !cardsShirt.classList.contains("success")) {
+            setTimeout(() => cardsShirt.classList.remove("flipped"), 200);
+            setTimeout(
+              () => cardsShirt.firstElementChild?.classList.remove("hide"),
+              200,
+            );
+
+            if (firstCard === null) {
+              firstCard = index;
+            } else {
+              if (index !== firstCard) {
+                secondCard = index;
+                clickable = false;
+              }
+            }
+            if (
+              firstCard !== null &&
+              secondCard !== null &&
+              firstCard !== secondCard
+            ) {
+              if (cards[firstCard] === cards[secondCard]) {
+                cardsShirts[firstCard].classList.add("success");
+                cardsShirts[secondCard].classList.add("success");
+                firstCard = null;
+                secondCard = null;
+                clickable = true;
+              } else {
+                if (appEl) {
+                  let time = appEl.querySelector(".time");
+                  if (time) (0,_components_render_js__WEBPACK_IMPORTED_MODULE_1__.renderCongratulation)(appEl, time.innerText);
+                }
+              }
+              if (
+                Array.from(cardsShirts).every((cardsShirt) =>
+                  cardsShirt.classList.contains("success"),
+                )
+              ) {
+                if (appEl) {
+                  let time = appEl.querySelector(".time");
+                  if (time) (0,_components_render_js__WEBPACK_IMPORTED_MODULE_1__.renderCongratulation)(appEl, time.innerText, "win");
+                }
+              }
+            }
+          }
+        });
+      });
+    }, 5000);
+  }
+}
 
 
 /***/ }),
@@ -17463,23 +17610,12 @@ __webpack_require__.r(__webpack_exports__);
 /******/ 	})();
 /******/ 	
 /************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-(() => {
-"use strict";
-/*!******************!*\
-  !*** ./index.js ***!
-  \******************/
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles.css */ "./styles.css");
-/* harmony import */ var _components_render_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/render.js */ "./components/render.js");
-
-
-
-(0,_components_render_js__WEBPACK_IMPORTED_MODULE_1__.renderApp)();
-
-})();
-
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__("./index.js");
+/******/ 	
 /******/ })()
 ;
 //# sourceMappingURL=main.js.map

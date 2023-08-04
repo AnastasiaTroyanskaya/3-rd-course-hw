@@ -1,6 +1,9 @@
-let appEl = document.getElementById("app");
 import { getCardsArray } from "../components/utils.js";
-export const renderApp = () => {
+import { gameLogic } from "../index.js";
+import { initTimer } from "../components/utils.js";
+let appEl = document.getElementById("app");
+
+export const renderApp = (appEl) => {
   const appHtml = `
     <form action="#" class="difficulty-block">
     <h3 class="difficulty-title">Выбери сложность</h3>
@@ -34,14 +37,13 @@ export const renderApp = () => {
 function getCardHTML(card) {
   return `<li class="shirt">
       <div class="card">
-          <img src="${card}" alt = "карта">
+          <img src="${card.value}" alt = "карта">
       </div>
       `;
 }
 function renderGameComponent(level) {
   const cards = getCardsArray(level);
   const cardsHtml = cards.map((card) => getCardHTML(card)).join("");
-  console.log(cardsHtml);
   const appHtml = `
       <div class="game-header">
       <div class="timer">
@@ -57,9 +59,39 @@ function renderGameComponent(level) {
       <ul>${cardsHtml}</ul>
       </div>`;
   appEl.innerHTML = appHtml;
+  const timer = appEl.querySelector(".time");
+  if (timer) initTimer(timer);
 
-  let playingCards = appEl.querySelectorAll(".card");
-  for (const playingCard of playingCards) {
-    setTimeout(() => playingCard.classList.add("hide"), 5000);
+  const restart = appEl.querySelector(".restart");
+  if (restart) {
+    restart.onclick = () => {
+      renderApp(appEl);
+    };
+    gameLogic(cards);
   }
+  // let playingCards = appEl.querySelectorAll(".card");
+  // for (const playingCard of playingCards) {
+  //   setTimeout(() => playingCard.classList.add("hide"), 5000);
+  // }
+}
+export function renderCongratulation(appEl, time, win) {
+  const winHtml = `<div class="finish-game">
+    <div class="image">
+    <img src=${
+      win ? "./assets/images/celebration.png" : "./assets/images/dead.png"
+    } alt = "картинка">
+    </div>
+    <h3 class="win-title">Вы ${win ? "выиграли" : "проиграли"}!</h3>
+    <!-- <div class="time"> -->
+    <p class="time-text">Затраченное время:</p>
+    <p class="time-value">${time}</p>
+    <!-- </div> -->
+    <button class="start-button">Играть снова</button>
+  </div>`;
+  appEl.innerHTML = winHtml;
+  const restart = appEl.querySelector(".start-button");
+  if (restart)
+    restart.onclick = () => {
+      renderApp(appEl);
+    };
 }
