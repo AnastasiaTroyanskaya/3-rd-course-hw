@@ -234,7 +234,7 @@ ul {
   display: none;
 }
 
-.flipped {
+.shirt.flip {
   transform: perspective(100px) rotateY(180deg);
 }
 
