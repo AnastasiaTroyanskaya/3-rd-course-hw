@@ -1,3 +1,6 @@
+/*!**************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./styles.css ***!
+  \**************************************************************/
 * {
   margin: 0;
   padding: 0;
@@ -8,7 +11,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url("./assets/stratosskyengweb-regular.woff2") format("woff2");
+  src: url(ce93393e831d32412096.woff2) format("woff2");
 }
 
 body {
@@ -224,7 +227,7 @@ ul {
 .shirt {
   width: 95px;
   height: 133px;
-  background-image: url(".//assets/images/cards/рубашка.png");
+  background-image: url(acda991c17e18f87daee.png);
   background-size: contain;
   background-repeat: no-repeat;
   transition: all 0.2s linear;
@@ -241,3 +244,6 @@ ul {
 .success {
   box-sizing: border-box;
 }
+
+
+/*# sourceMappingURL=main.css.map*/
