@@ -4,7 +4,7 @@ import {
   } from "./components/render";
   import "./styles.css";
   
-  let appEl = document.getElementById("app");
+  const appEl = document.getElementById("app");
   let firstCard: number | null = null;
   let secondCard: number | null = null;
   let clickable = true;
@@ -13,8 +13,8 @@ import {
   
   export function gameLogic(cards: string[]) {
     if (appEl) {
-      let cardsShirts = appEl.querySelectorAll(".shirt");
-      cardsShirts.forEach((cardsShirt, index) => {
+      const cardsShirts = appEl.querySelectorAll(".shirt");
+      cardsShirts.forEach((cardsShirt) => {
         setTimeout(
           () => cardsShirt.firstElementChild?.classList.add("hide"),
           5000,
@@ -53,7 +53,7 @@ import {
                   clickable = true;
                 } else {
                   if (appEl) {
-                    let time = appEl.querySelector<HTMLElement>(".time");
+                    const time = appEl.querySelector<HTMLElement>(".time");
                     if (time) renderCongratulation(appEl, time.innerText);
                     firstCard = null;
                     secondCard = null;
@@ -66,7 +66,7 @@ import {
                   )
                 ) {
                   if (appEl) {
-                    let time = appEl.querySelector<HTMLElement>(".time");
+                    const time = appEl.querySelector<HTMLElement>(".time");
                     if (time) renderCongratulation(appEl, time.innerText, "win");
                   }
                 }

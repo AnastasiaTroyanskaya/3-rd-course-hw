@@ -1,5 +1,6 @@
 const { it, expect } = require("@jest/globals");
 const { getCardsArray } = require("./components/utils");
+
 import { uniq } from 'lodash';
 
 describe('getCardsArray', () => {
