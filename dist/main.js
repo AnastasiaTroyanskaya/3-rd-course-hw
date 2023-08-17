@@ -17245,7 +17245,7 @@ __webpack_require__.r(__webpack_exports__);
 
 function renderDifficultyComponent(appEl) {
     const appHtml = `
-      <form action="#" class="difficulty_block">
+      <form action="#" class="difficulty-block">
       <h3 class="difficulty-title">Выбери сложность</h3>
       <fieldset class="radio-inputs">
           <label>
@@ -17427,7 +17427,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./styles.css */ "./styles.css");
 
 
-let appEl = document.getElementById("app");
+const appEl = document.getElementById("app");
 let firstCard = null;
 let secondCard = null;
 let clickable = true;
@@ -17435,8 +17435,8 @@ if (appEl)
     (0,_components_render__WEBPACK_IMPORTED_MODULE_0__.renderDifficultyComponent)(appEl);
 function gameLogic(cards) {
     if (appEl) {
-        let cardsShirts = appEl.querySelectorAll(".shirt");
-        cardsShirts.forEach((cardsShirt, index) => {
+        const cardsShirts = appEl.querySelectorAll(".shirt");
+        cardsShirts.forEach((cardsShirt) => {
             setTimeout(() => { var _a; return (_a = cardsShirt.firstElementChild) === null || _a === void 0 ? void 0 : _a.classList.add("hide"); }, 5000);
             setTimeout(() => cardsShirt.classList.add("flip"), 5000);
         });
@@ -17467,7 +17467,7 @@ function gameLogic(cards) {
                             }
                             else {
                                 if (appEl) {
-                                    let time = appEl.querySelector(".time");
+                                    const time = appEl.querySelector(".time");
                                     if (time)
                                         (0,_components_render__WEBPACK_IMPORTED_MODULE_0__.renderCongratulation)(appEl, time.innerText);
                                     firstCard = null;
@@ -17477,7 +17477,7 @@ function gameLogic(cards) {
                             }
                             if (Array.from(cardsShirts).every((cardsShirt) => cardsShirt.classList.contains("success"))) {
                                 if (appEl) {
-                                    let time = appEl.querySelector(".time");
+                                    const time = appEl.querySelector(".time");
                                     if (time)
                                         (0,_components_render__WEBPACK_IMPORTED_MODULE_0__.renderCongratulation)(appEl, time.innerText, "win");
                                 }
