@@ -1,9 +1,10 @@
-var path = require("path");
-var HtmlWebpackPlugin = require("html-webpack-plugin");
-var CopyPlugin = require("copy-webpack-plugin");
-var MiniCssExtractPlugin = require("mini-css-extract-plugin");
-var CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-var isProduction = process.env.NODE_ENV;
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+
+const isProduction = process.env.NODE_ENV;
 
 module.exports = {
   entry: "./index.ts",
