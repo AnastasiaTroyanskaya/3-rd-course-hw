@@ -21,9 +21,12 @@ module.exports = {
       "error",
       {
         endOfLine: "auto",
+        singleQuote: false,
       },
-      ['error', { singleQuote: true }]
     ],
+    "@typescript-eslint/no-var-requires": "off",
+    indent: "off",
+    quotes: "off",
     camelcase: ["error"],
     strict: "error",
     eqeqeq: ["error", "always"],
