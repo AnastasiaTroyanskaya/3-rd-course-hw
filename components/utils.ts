@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 
-export const getCardsArray = (difficult:number) => {
+export const getCardsArray = (difficult: number) => {
   const cards: string[] = [
     "./assets/images/cards/6 бубны.png",
     "./assets/images/cards/6 крести.png",
@@ -45,7 +45,7 @@ export const getCardsArray = (difficult:number) => {
   return _.shuffle(duplicatedArray);
 };
 
-export function initTimer(element:HTMLElement) {
+export function initTimer(element: HTMLElement) {
   // let hours = 0;
   let minutes = 0;
   let seconds = 0;
